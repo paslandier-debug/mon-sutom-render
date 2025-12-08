@@ -1,0 +1,82 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f4f4f9;
+    padding-top: 20px;
+}
+
+#grille {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Espace entre les lignes */
+    margin-bottom: 20px;
+}
+
+.ligne {
+    display: flex;
+    gap: 5px; /* Espace entre les cases */
+}
+
+.case {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    font-weight: bold;
+    color: #fff; /* Couleur du texte blanc */
+    text-transform: uppercase;
+    transition: background-color 0.5s ease, transform 0.2s ease;
+}
+
+/* --- Styles des Indices SUTOM --- */
+
+/* La couleur de base (Bleu/Gris) - Lettre absente */
+.case-bleue {
+    background-color: #b1b1c9;
+    border-color: #3a3a3c;
+}
+
+/* La couleur Jaune - Lettre mal placée */
+.case-jaune {
+    background-color: #c9b458;
+    border-color: #c9b458;
+}
+
+/* La couleur Rouge - Lettre bien placée */
+.case-rouge {
+    background-color: #6aaa64; /* Utilisation du vert foncé qui simule le rouge de SUTOM */
+    border-color: #6aaa64;
+}
+
+/* État pour la case en cours de saisie (Optionnel) */
+.case-active {
+    border-color: #333;
+}
+
+/* Zone de saisie */
+#saisie-zone {
+    display: flex;
+    gap: 10px;
+}
+
+#input-mot {
+    padding: 10px;
+    font-size: 1.2em;
+    border: 2px solid #ccc;
+    text-transform: uppercase;
+}
+
+#bouton-valider {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

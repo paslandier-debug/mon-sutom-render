@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUTOM des copains</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>SUTOM des copains ! 💡</h1>
+    </header>
+
+    <main>
+        <div id="grille">
+            <div class="ligne" data-tentative="0">
+                <div class="case"></div>
+                <div class="case"></div>
+                <div class="case"></div>
+                <div class="case"></div>
+                <div class="case"></div>
+                <div class="case"></div>
+            </div>
+
+            </div>
+
+        <div id="saisie-zone">
+            <input type="text" id="input-mot" maxlength="6" placeholder="Entrez votre mot..." autocomplete="off">
+            <button id="bouton-valider">Valider</button>
+            <p id="message-erreur" style="color: red;"></p>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+exécuter la commande suivante dans CMD en se placant dans le bon répertoire
+
+
+node filtrerDictionnaire.js
+
+cela transforme le fichier "dictionnaire_brut.txt" en "dictionnaire_sutom.json"
