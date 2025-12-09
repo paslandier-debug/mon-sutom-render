@@ -5,7 +5,7 @@ body {
     padding: 20px;
     flex-direction: column;
     align-items: center;
-    background-color: #f4f4f9;
+    background-color: #2121e6;
     padding-top: 20px;
 }
 
@@ -69,7 +69,7 @@ body {
 
 /* La couleur Jaune - Lettre mal placée */
 .case-jaune {
-    background-color: #c9b458;
+    background-color: #ebee33;
     border-color: #c9b458;
 }
 

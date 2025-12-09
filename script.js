@@ -1,6 +1,6 @@
 // --- CONFIGURATION DU JEU CÔTÉ CLIENT ---
- const LONGUEUR_MOT = 6;
- const PREMIERE_LETTRE = 'X';
+const LONGUEUR_MOT = 6;
+const PREMIERE_LETTRE = 'X';
 const MAX_TENTATIVES = 6;
 const URL_API_VERIFIER = '/api/verifier_mot';
 
