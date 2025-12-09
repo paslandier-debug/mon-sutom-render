@@ -1,5 +1,5 @@
 // --- CONFIGURATION DU JEU CÔTÉ CLIENT ---
- const LONGUEUR_MOT = 6;
+ const LONGUEUR_MOT = 7;
  const PREMIERE_LETTRE = 'X';
 const MAX_TENTATIVES = 6;
 const URL_API_VERIFIER = '/api/verifier_mot';
@@ -21,30 +21,30 @@ let NB_COUPS = 6;
 // ===========================================================================================
 // Nouvelle fonction (asynchrone) :
 async function initializeGame() {
-// xxx     
-// xxx     // 1. Appel de la nouvelle API
-     try {
+    
+    // 1. Appel de la nouvelle API
+    try {
         const response = await fetch('/api/premiere_lettre');
         const data = await response.json();
-         
-// xxx         // 2. Mettre à jour les paramètres du jeu
+        
+        // 2. Mettre à jour les paramètres du jeu
         const LONGUEUR_MOT = data.longueur;
- 	const PREMIERE_LETTRE = data.premiereLettre;
-         
-// xxx         // 3. Créer la grille (maintenant que WORD_LENGTH est connu)
-// xxx         // initialiserJeu(); 
-// xxx 
-// xxx         // 4. Révéler la première lettre
-         afficherPremiereLettre(data.premiereLettre);
-// xxx         
-// xxx         // 5. Écouter les entrées clavier
-// xxx		gererSoumission();
- 
-     } catch (error) {
-         console.error("Erreur d'initialisation du jeu via l'API :", error);
-         alert("Impossible de démarrer le jeu. Veuillez vérifier la connexion au // xxx serveur.");
-     }
- }
+	const PREMIERE_LETTRE = data.premiereLettre;
+        
+        // 3. Créer la grille (maintenant que WORD_LENGTH est connu)
+        // initialiserJeu(); 
+
+        // 4. Révéler la première lettre
+        afficherPremiereLettre(data.premiereLettre, data.couleur);
+        
+        // 5. Écouter les entrées clavier
+        gererSoumission();
+
+    } catch (error) {
+        console.error("Erreur d'initialisation du jeu via l'API :", error);
+        alert("Impossible de démarrer le jeu. Veuillez vérifier la connexion au serveur.");
+    }
+}
 
 
 
@@ -83,11 +83,11 @@ function initialiserJeu() {
  * Affiche la première lettre dans la première case.
  */
 function afficherPremiereLettre(lettre) {
-    	const premiereCase = grilleElement.querySelector('.ligne[data-tentative="0"] .case:first-child');
-	if (premiereCase) {
-        	premiereCase.textContent = lettre;
-        	premiereCase.classList.add('case-rouge'); // La première lettre est toujours Rouge
-    	}
+    const premiereCase = grilleElement.querySelector('.ligne[data-tentative="0"] .case:first-child');
+    if (premiereCase) {
+        premiereCase.textContent = lettre;
+        premiereCase.classList.add('case-rouge'); // La première lettre est toujours Rouge
+    }
 }
 
 // ------------------------------------------
@@ -244,7 +244,7 @@ boutonValider.addEventListener('click', gererSoumission);
 // Événement : Appuyer sur la touche Entrée dans le champ de saisie
 inputMot.addEventListener('keypress', (e) => {
     // Vérifiez si la touche pressée est 'Entrée' (code 13)
-     if (e.key === 'Enter') { 
-         gererSoumission();
-     }
- });
+    if (e.key === 'Enter') { 
+        gererSoumission();
+    }
+});

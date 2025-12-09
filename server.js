@@ -55,13 +55,21 @@ const PORT = 3000;
 // >>	ici 2 dictionnaires : le complet et l'extrait avec les mots de 6 lettres
 // >>>>>>>>>> à optimiser pour utiliser toujours le complet pour tous les mots 6,7,8..
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-const DICTIONNAIRE = JSON.parse(
-    fs.readFileSync(path.join(__dirname, 'dictionnaire.json'), 'utf8')
-);
+// xxx const DICTIONNAIRE = JSON.parse(
+// xxx    fs.readFileSync(path.join(__dirname, 'dictionnaire.json'), 'utf8')
+// xxx );
 const DICO_6 = JSON.parse(
     fs.readFileSync(path.join(__dirname, 'dictionnaire-6.json'), 'utf8')
 );
-
+const DICO_7 = JSON.parse(
+    fs.readFileSync(path.join(__dirname, 'dictionnaire-7.json'), 'utf8')
+);const DICO_8 = JSON.parse(
+    fs.readFileSync(path.join(__dirname, 'dictionnaire-8.json'), 'utf8')
+);const DICO_9 = JSON.parse(
+    fs.readFileSync(path.join(__dirname, 'dictionnaire-9.json'), 'utf8')
+);const DICO_10 = JSON.parse(
+    fs.readFileSync(path.join(__dirname, 'dictionnaire-10.json'), 'utf8')
+);
 // ==============================================
 // ====    FONCTION : MOT DU JOUR (getMotDuJour)
 // ============================================== 
@@ -71,15 +79,71 @@ const DICO_6 = JSON.parse(
 // >> 	à optimiser Plus tard, utiliser une BDD ou une logique de date ici
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
  
-function getMotDuJour(longueur = 6) {
-    const motsPourLong = DICTIONNAIRE[longueur];
-    if (!motsPourLong || motsPourLong.length === 0) {
-        return null; 
-    }    
-	return motsPourLong[0]; 
+// xxx function getMotDuJour(longueur = 6) {
+// xxx   const motsPourLong = DICTIONNAIRE[longueur];
+// xxx    if (!motsPourLong || motsPourLong.length === 0) {
+// xxx       return null; 
+// xxx    }    
+// xxx	return motsPourLong[0]; 
+// xxx}
+/**
+ * Générateur de nombres pseudo-aléatoires déterministe.
+ * Utilise la graine pour toujours retourner la même séquence.
+ * @param {number} seed - La graine numérique (par exemple, le timestamp du jour).
+ * @returns {function} Une fonction qui retourne un nombre aléatoire entre 0 (inclus) et 1 (exclus).
+ */
+function seededRandom(seed) {
+  // Simple LCG (Linear Congruential Generator)
+  let state = seed % 2147483647; // Utiliser un grand nombre premier pour l'état initial
+  if (state <= 0) state += 2147483646;
+
+  return function() {
+    // a = 16807, m = 2147483647 (Standard Park-Miller LCG)
+    state = (state * 16807) % 2147483647;
+    return (state - 1) / 2147483646;
+  };
 }
 
-const MOT_DU_JOUR = getMotDuJour(6); // Par exemple, choisir un mot de 6 lettres
+/**
+ * Sélectionne un mot aléatoire mais déterministe pour le jour.
+ * @param {string[]} wordList - La liste des mots disponibles.
+ * @returns {string} Le mot du jour.
+ */
+function getDailyWord(wordList) {
+  // 1. Déterminer la Graine (Seed) à partir de la date actuelle
+  const now = new Date();
+
+  // Nous construisons une chaîne de date au format AAAA-MM-JJ
+  // et la convertissons en un nombre unique (la 'graine').
+  const year = now.getFullYear();
+  // Le mois est 0-indexé, nous ajoutons 1 et padStart(2, '0') pour '01', '02', etc.
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+
+  const dateString = `${year}${month}${day}`;
+
+  // Conversion de la chaîne de date en nombre (graine). 
+  // Nous utilisons une fonction de hachage simple ou parseInt.
+  // Une méthode courante est de prendre la date en millisecondes pour une graine plus unique :
+  // Cependant, pour le jour, une valeur entière est plus stable :
+  const seed = parseInt(dateString, 10); 
+  
+  // 2. Initialiser le générateur avec la graine du jour
+  const rand = seededRandom(seed);
+
+  // 3. Obtenir l'index aléatoire (déterministe)
+  const listLength = wordList.length;
+  // rand() retourne un nombre entre 0 (inclus) et 1 (exclus)
+  const index = Math.floor(rand() * listLength);
+  
+  // 4. Retourner le mot
+  return wordList[index];
+}
+
+// Appeler la fonction
+const MOT_DU_JOUR = getDailyWord(DICO_6);
+
+// xxx  const MOT_DU_JOUR = getMotDuJour(6); // Par exemple, choisir un mot de 6 lettres
 const LONGUEUR_REQUISE = MOT_DU_JOUR.length;
 console.log(`Le Mot du Jour est : ${MOT_DU_JOUR}`);
 
@@ -151,6 +215,7 @@ app.get('/api/premiere_lettre', (req, res) => {
         const premiereLettre = MOT_DU_JOUR[0];
         const longueur = MOT_DU_JOUR.length;
         console.log("API: première lettre " + premiereLettre);
+	console.log("API: longueur mot " + longueur);
         // Renvoyer les informations au Front-end
         res.json({
             premiereLettre: MOT_DU_JOUR[0],

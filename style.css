@@ -37,7 +37,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 5px; /* Espace entre les lignes */
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .ligne {
